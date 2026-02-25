@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCK Trading Platform</title>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+
+<style>
+
+/* ================= GENERAL ================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#000;
+font-family:Arial, Helvetica, sans-serif;
+color:#fff;
+overflow-x:hidden;
+}
+
+a{
+text-decoration:none;
+}
+
+/* ================= HEADER ================= */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#0d0d0d;
+border-bottom:1px solid gold;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:gold;
+letter-spacing:3px;
+}
+
+.founder{
+font-size:13px;
+color:#999;
+}
+
+.nav-buttons button{
+background:gold;
+color:black;
+border:none;
+padding:8px 15px;
+margin-left:10px;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+.nav-buttons button:hover{
+background:#ffd700;
+box-shadow:0 0 15px gold;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+text-align:center;
+padding:60px 20px;
+}
+
+.hero h1{
+font-size:40px;
+color:gold;
+margin-bottom:20px;
+}
+
+.hero p{
+color:#aaa;
+font-size:18px;
+}
+
+/* ================= LIVE CLOCK ================= */
+
+.clock{
+margin-top:15px;
+font-size:18px;
+color:#ffd700;
+}
+
+/* ================= PRICES ================= */
+
+.prices{
+display:flex;
+justify-content:center;
+gap:25px;
+padding:30px 10px;
+flex-wrap:wrap;
+}
+
+.coin{
+background:#111;
+padding:15px 25px;
+border-radius:10px;
+border:1px solid gold;
+font-size:18px;
+min-width:200px;
+text-align:center;
+transition:0.3s;
+}
+
+.coin:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px gold;
+}
+
+/* ================= CHART ================= */
+
+#chart{
+height:500px;
+margin:20px;
+border:1px solid gold;
+border-radius:10px;
+}
+
+/* ================= FEATURES ================= */
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:40px;
+}
+
+.feature-box{
+background:#111;
+padding:25px;
+border-radius:15px;
+border:1px solid gold;
+transition:0.3s;
+}
+
+.feature-box:hover{
+transform:translateY(-10px);
+box-shadow:0 0 20px gold;
+}
+
+.feature-box h3{
+color:gold;
+margin-bottom:10px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+margin-top:50px;
+padding:30px;
+text-align:center;
+border-top:1px solid gold;
+color:#888;
+}
+
+/* ================= INSTAGRAM BUTTON ================= */
+
+.instagram-btn{
+display:inline-block;
+margin-top:20px;
+padding:10px 20px;
+background:linear-gradient(45deg,#feda75,#d62976,#962fbf,#4f5bd5);
+color:white;
+border-radius:8px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.instagram-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 15px #d62976;
+}
+
+/* ================= LANGUAGE SWITCH ================= */
+
+.lang-switch{
+margin-top:15px;
+cursor:pointer;
+color:gold;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div>
+<div class="logo">MCK</div>
+<div class="founder">Founder: Mohamed Athamnia</div>
+</div>
+
+<div class="nav-buttons">
+<button onclick="switchLang()">AR / EN</button>
+<button>Login</button>
+<button>Register</button>
+</div>
+</header>
+
+<section class="hero">
+<h1 id="title">منصة تداول احترافية جديدة</h1>
+<p id="subtitle">انتظروا إطلاق MCK قريباً</p>
+<div class="clock" id="clock"></div>
+
+<a href="https://instagram.com/YOUR_USERNAME" target="_blank" class="instagram-btn">
+تابعني على إنستغرام
+</a>
+
+</section>
+
+<section class="prices">
+
+<div class="coin">BTC: <span id="btc">...</span> $</div>
+<div class="coin">ETH: <span id="eth">...</span> $</div>
+<div class="coin">BNB: <span id="bnb">...</span> $</div>
+<div class="coin">SOL: <span id="sol">...</span> $</div>
+<div class="coin">XRP: <span id="xrp">...</span> $</div>
+
+</section>
+
+<div id="chart"></div>
+
+<section class="features">
+
+<div class="feature-box">
+<h3>أمان عالي</h3>
+<p>حماية متقدمة للبيانات والمحافظ الرقمية.</p>
+</div>
+
+<div class="feature-box">
+<h3>تنفيذ سريع</h3>
+<p>سرعة فائقة في تنفيذ الأوامر.</p>
+</div>
+
+<div class="feature-box">
+<h3>رسوم منخفضة</h3>
+<p>أقل عمولات تداول ممكنة.</p>
+</div>
+
+<div class="feature-box">
+<h3>واجهة احترافية</h3>
+<p>تصميم متطور يشبه التطبيقات العالمية.</p>
+</div>
+
+</section>
+
+<footer>
+© 2026 MCK Trading Platform - All Rights Reserved
+</footer>
+
+<script>
+
+/* ================= LIVE CLOCK ================= */
+
+function updateClock(){
+let now=new Date();
+document.getElementById("clock").innerText=
+now.toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
+
+/* ================= CRYPTO PRICES ================= */
+
+async function updatePrices(){
+let res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,ripple&vs_currencies=usd");
+let data=await res.json();
+
+document.getElementById("btc").innerText=data.bitcoin.usd;
+document.getElementById("eth").innerText=data.ethereum.usd;
+document.getElementById("bnb").innerText=data.binancecoin.usd;
+document.getElementById("sol").innerText=data.solana.usd;
+document.getElementById("xrp").innerText=data.ripple.usd;
+}
+
+setInterval(updatePrices,5000);
+updatePrices();
+
+/* ================= TRADING VIEW CHART ================= */
+
+new TradingView.widget({
+"width":"100%",
+"height":500,
+"symbol":"BINANCE:BTCUSDT",
+"interval":"1",
+"timezone":"Etc/UTC",
+"theme":"dark",
+"style":"1",
+"locale":"en",
+"toolbar_bg":"#000",
+"container_id":"chart"
+});
+
+/* ================= LANGUAGE SWITCH ================= */
+
+let currentLang="ar";
+
+function switchLang(){
+
+if(currentLang==="ar"){
+document.getElementById("title").innerText="New Professional Trading Platform";
+document.getElementById("subtitle").innerText="MCK Launching Soon";
+currentLang="en";
+}else{
+document.getElementById("title").innerText="منصة تداول احترافية جديدة";
+document.getElementById("subtitle").innerText="انتظروا إطلاق MCK قريباً";
+currentLang="ar";
+}
+
+}
+
+</script>
+
+</body>
+  </html>
