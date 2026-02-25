@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCK MONSTER VERSION 2</title>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<style>
+/* ===== GENERAL ===== */
+body {margin:0; font-family: Arial, sans-serif; background:#000; color:white;}
+a {text-decoration:none; color:white;}
+button {cursor:pointer; transition:0.3s; border:none; border-radius:6px; font-weight:bold;}
+
+/* ===== LOADER ===== */
+#loader {
+  position:fixed; width:100%; height:100vh; background:#000;
+  display:flex; justify-content:center; align-items:center;
+  z-index:9999; color:gold; font-size:32px;
+  animation:fadeOut 3s forwards; animation-delay:2.5s;
+}
+@keyframes fadeOut {to{opacity:0; visibility:hidden;}}
+
+/* ===== HEADER ===== */
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 40px; background:#0d0d0d; border-bottom:2px solid gold;
+  position:sticky; top:0; z-index:1000;
+}
+.logo {font-size:28px; color:gold; font-weight:bold;}
+.nav-buttons button {background:gold; color:black; padding:8px 15px; margin-left:10px;}
+.nav-buttons button:hover {box-shadow:0 0 20px gold;}
+.dropdown {position:relative; display:inline-block; margin-left:20px;}
+.dropdown button {background:#222; color:gold; padding:10px 20px;}
+.dropdown-content {
+  display:none; position:absolute; background:#111; min-width:160px;
+  box-shadow:0 8px 16px rgba(0,0,0,0.3); border:1px solid gold; border-radius:8px;
+  z-index:1;
+}
+.dropdown-content a {color:gold; padding:12px 16px; display:block;}
+.dropdown-content a:hover {background:gold; color:black;}
+.dropdown:hover .dropdown-content {display:block;}
+
+/* ===== HERO ===== */
+.hero {text-align:center; padding:60px 20px;}
+.hero h1 {color:gold; font-size:42px; margin-bottom:20px;}
+.hero p {color:#aaa; font-size:18px; margin-bottom:15px;}
+.countdown {font-size:22px; color:#ffd700; margin-top:10px;}
+
+/* ===== TICKER ===== */
+.ticker {background:#111; color:gold; padding:10px; white-space:nowrap; overflow:hidden;}
+.ticker span {display:inline-block; padding-left:100%; animation:scroll 20s linear infinite;}
+@keyframes scroll {0% {transform:translateX(0);} 100% {transform:translateX(-100%);}}
+
+/* ===== DASHBOARD ===== */
+.dashboard {display:flex; justify-content:center; gap:30px; padding:20px; flex-wrap:wrap;}
+.card {background:#111; padding:20px; border-radius:15px; border:1px solid gold; min-width:250px; transition:0.3s;}
+.card:hover {transform:scale(1.05); box-shadow:0 0 20px gold;}
+.card h3 {color:gold; margin-bottom:10px;}
+
+/* ===== MARKET TABLE ===== */
+table {width:90%; margin:auto; border-collapse:collapse; margin-top:30px;}
+th, td {padding:12px; border-bottom:1px solid #333; text-align:center;}
+th {color:gold;}
+tr:hover {background:#111;}
+
+/* ===== CHART ===== */
+#chart {height:400px; margin:30px; border:1px solid gold; border-radius:10px;}
+
+/* ===== INSTAGRAM BUTTON ===== */
+.instagram {
+  display:inline-block; margin-top:15px; padding:10px 20px;
+  background:linear-gradient(45deg,#feda75,#d62976,#962fbf,#4f5bd5);
+  border-radius:8px; color:white; font-weight:bold; transition:0.3s;
+}
+.instagram:hover {transform:scale(1.1); box-shadow:0 0 15px #d62976;}
+
+/* ===== START BUTTON ===== */
+.start-btn {background:red; color:white; padding:12px 25px; font-weight:bold; border-radius:8px;}
+.start-btn:hover {box-shadow:0 0 20px orange; transform:scale(1.1);}
+.fire {display:inline-block; width:20px; height:20px; background:orange; border-radius:50%; margin-left:10px; animation:flame 0.5s infinite alternate;}
+@keyframes flame {0%{transform:translateY(0) scale(1);}100%{transform:translateY(-10px) scale(1.2);}}
+
+/* ===== TRADING INTERFACE ===== */
+#tradingInterface {display:none; padding:20px;}
+#tradingInterface h2 {color:gold; margin-bottom:15px;}
+#tradingInterface input, #tradingInterface select {padding:8px; margin:5px; border-radius:5px; border:none;}
+#tradingInterface button {background:gold; color:black; padding:8px 15px; margin-top:10px;}
+#orderHistory {margin-top:15px; width:100%; border-collapse:collapse;}
+#orderHistory th, #orderHistory td {padding:8px; border-bottom:1px solid #333; text-align:center;}
+#orderHistory th {color:gold;}
+</style>
+</head>
+<body>
+<div id="loader">MCK MONSTER VERSION 2 Loading...</div>
+
+<header>
+<div class="logo">MCK</div>
+<div class="nav-buttons">
+<button onclick="switchLang()">AR/EN/FR</button>
+<button>Login</button>
+<button>Register</button>
+<div class="dropdown">
+<button>Trading Options ▼</button>
+<div class="dropdown-content">
+<a href="#" onclick="showTrading()">Start Trading <span class="fire"></span></a>
+<a href="#">Markets</a>
+<a href="#">Portfolio</a>
+</div>
+</div>
+</div>
+</header>
+
+<div class="ticker"><span id="tickerText">Loading prices...</span></div>
+
+<section class="hero">
+<h1 id="heroTitle">منصة MCK القادمة</h1>
+<p id="heroSubtitle">Platform Launching Soon <span class="fire"></span></p>
+<div class="countdown" id="countdown"></div>
+<a href="https://www.instagram.com/mohamed_athamnia?igsh=MWtyejJ5bWg1YzJsNA==" target="_blank" class="instagram">تابع المطور</a>
+</section>
+
+<section class="dashboard">
+<div class="card"><h3>Founder</h3><p>Mohamed Athamnia</p></div>
+<div class="card"><h3>Demo Balance</h3><p id="balance">10,000 $</p></div>
+<div class="card"><h3>Status</h3><p>Platform in Development</p></div>
+</section>
+
+<div id="chart"></div>
+
+<table>
+<thead><tr><th>Coin</th><th>Price $</th></tr></thead>
+<tbody id="marketTable"></tbody>
+</table>
+
+<!-- Trading Interface -->
+<div id="tradingInterface">
+<h2>Trading Simulation</h2>
+<label>Coin:</label>
+<select id="tradeCoin">
+<option value="BTC">BTC</option>
+<option value="ETH">ETH</option>
+<option value="BNB">BNB</option>
+<option value="SOL">SOL</option>
+<option value="ADA">ADA</option>
+<option value="DOGE">DOGE</option>
+</select>
+<label>Amount:</label>
+<input type="number" id="tradeAmount" value="0">
+<br>
+<button onclick="executeTrade()">Buy/Sell</button>
+<p id="tradeMessage"></p>
+<table id="orderHistory">
+<thead><tr><th>Coin</th><th>Amount</th><th>Status</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+
+<footer>
+© 2026 MCK MONSTER VERSION 2
+<br>
+<a href="https://www.instagram.com/mohamed_athamnia?igsh=MWtyejJ5bWg1YzJsNA==" target="_blank" class="instagram">Instagram</a>
+</footer>
+
+<script>
+// ===== Countdown =====
+let launch=new Date(); launch.setDate(launch.getDate()+7);
+setInterval(()=>{
+let now=new Date(); let diff=launch-now;
+let days=Math.floor(diff/(1000*60*60*24));
+document.getElementById("countdown").innerText="Launch in "+days+" days";
+},1000);
+
+// ===== Live Prices =====
+async function loadMarket(){
+let res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple,binancecoin,cardano,shiba-inu,dogecoin&vs_currencies=usd");
+let data=await res.json();
+let table="";
+for(let coin in data){table+=`<tr><td>${coin.toUpperCase()}</td><td>${data[coin].usd}</td></tr>`;}
+document.getElementById("marketTable").innerHTML=table;
+document.getElementById("tickerText").innerText=
+`BTC:${data.bitcoin.usd} | ETH:${data.ethereum.usd} | SOL:${data.solana.usd} | XRP:${data.ripple.usd} | BNB:${data.binancecoin.usd} | ADA:${data.cardano.usd} | SHIB:${data["shiba-inu"].usd} | DOGE:${data.dogecoin.usd}`;
+}
+setInterval(loadMarket,5000); loadMarket();
+
+// ===== TradingView Chart =====
+new TradingView.widget({
+  "width":"100%","height":400,"symbol":"BINANCE:BTCUSDT",
+  "interval":"1","theme":"dark","container_id":"chart"
+});
+
+// ===== Language Switch =====
+let langs=["ar","en","fr"], currentLang=0;
+function switchLang(){
+currentLang=(currentLang+1)%3;
+if(currentLang==0){document.getElementById("heroTitle").innerText="منصة MCK القادمة";document.getElementById("heroSubtitle").innerText="انتظروا الإطلاق قريباً";}
+else if(currentLang==1){document.getElementById("heroTitle").innerText="MCK Trading Platform";document.getElementById("heroSubtitle").innerText="Platform Launching Soon";}
+else{document.getElementById("heroTitle").innerText="Plateforme de Trading MCK";document.getElementById("heroSubtitle").innerText="Lancement bientôt";}
+}
+
+// ===== Show Trading =====
+function showTrading(){document.getElementById("tradingInterface").style.display="block";}
+
+// ===== Execute Fake Trade =====
+function executeTrade(){
+let coin=document.getElementById("tradeCoin").value;
+let amount=parseFloat(document.getElementById("tradeAmount").value);
+if(amount>0){
+document.getElementById("tradeMessage").innerText=`Order Executed: ${amount} ${coin} (Demo)`; document.getElementById("tradeMessage").style.color="gold";
+let balance=parseFloat(document.getElementById("balance").innerText.replace(",","").replace(" $",""));
+document.getElementById("balance").innerText=(balance-amount).toFixed(2)+" $";
+// Update Order History
+let row=document.createElement("tr");
+row.innerHTML=`<td>${coin}</td><td>${amount}</td><td>Executed</td>`;
+document.querySelector("#orderHistory tbody").appendChild(row);
+} else {
+document.getElementById("tradeMessage").innerText="Enter valid amount"; document.getElementById("tradeMessage").style.color="red";
+}
+}
+</script>
+</body>
+</html>
